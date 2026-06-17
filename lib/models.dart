@@ -60,6 +60,29 @@ class Question {
   }
 }
 
+class QuestionAdapter extends TypeAdapter<Question> {
+  @override
+  final int typeId = 2;
+
+  @override
+  Question read(BinaryReader reader) {
+    return Question(
+      question: reader.readString(),
+      correctAnswer: reader.readString(),
+      incorrectAnswers: reader.readStringList(),
+      allAnswers: reader.readStringList(),
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, Question obj) {
+    writer.writeString(obj.question);
+    writer.writeString(obj.correctAnswer);
+    writer.writeStringList(obj.incorrectAnswers);
+    writer.writeStringList(obj.allAnswers);
+  }
+}
+
 class QuizResult {
   final int correctAnswers;
   final int totalQuestions;
